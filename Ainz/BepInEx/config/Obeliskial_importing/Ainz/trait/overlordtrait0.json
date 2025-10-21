@@ -1,5 +1,5 @@
 {
-    "Activation": "BeginCombat",
+    "Activation": "BeginTurnCardsDealt",
     "AuraCurseBonus1": "",
     "AuraCurseBonus2": "",
     "AuraCurseBonus3": "",
@@ -23,7 +23,7 @@
     "DamageBonusPercentValue": 0.0,
     "DamageBonusPercentValue2": 0.0,
     "DamageBonusPercentValue3": 0.0,
-    "Description": "At the start of combat, apply 2 Scourge to a random monster.",
+    "Description": "At the start of each turn, apply 2 Scourge to a random monster.",
     "HealFlatBonus": 0,
     "HealPercentBonus": 0.0,
     "HealReceivedFlatBonus": 0,

@@ -2,7 +2,7 @@
     "NewGameObjectID": "skinainz",
     "BaseGameObjectID": "mortis",
     "SpriteToUse": "",
-    "ScaleX": 1,
-    "ScaleY": 1,
+    "ScaleX": 0.8,
+    "ScaleY": 0.8,
     "Flip": true
 }

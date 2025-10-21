@@ -96,7 +96,7 @@ namespace Ainz
                 // trait2b:
                 // When you play a card that costs 6 or more Energy, refund 2.
                 LogDebug($"Handling Trait {traitId}: {traitName}");
-                if (_castedCard != null && MatchManager.Instance.energyJustWastedByHero >= 6)
+                if (_castedCard != null && MatchManager.Instance.energyJustWastedByHero >= 7)
                 {
                     GainEnergy(_character, 2, traitData);
                 }

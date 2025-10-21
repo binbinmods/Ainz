@@ -7,7 +7,7 @@
         "{\n    \"UnitsInDeck\": 3,\n    \"Card\": \"necroticburst\"\n}",
         "{\n    \"UnitsInDeck\": 2,\n    \"Card\": \"maliciouseye\"\n}",
         "{\n    \"UnitsInDeck\": 1,\n    \"Card\": \"curseofdecay\"\n}",
-        "{\n    \"UnitsInDeck\": 1,\n    \"Card\": \"drainlife\"\n}",
+        "{\n    \"UnitsInDeck\": 1,\n    \"Card\": \"darknessfalls\"\n}",
         "{\n    \"UnitsInDeck\": 1,\n    \"Card\": \"overlordgraspheart\"\n}"
     ],
     "ChallengePack0": "shadowmancer",
@@ -64,8 +64,8 @@
     "Trait2B": "overlordtrait2b",
     "Trait3A": "overlordtrait3a",
     "Trait3B": "overlordtrait3b",
-    "Trait4A": "overlordtrait4a",
-    "Trait4B": "overlordtrait4b",
+    "Trait4A": "overlordtrait4b",
+    "Trait4B": "overlordtrait4a",
     "CardsSingularity": [
         "overlordgraspheart",
         "curseofshadows",
@@ -73,7 +73,7 @@
         "necroticburst",
         "maliciouseye",
         "curseofdecay",
-        "drainlife",
+        "darknessfalls",
         "curseofagony",
         "curseoffragility",
         "shadowbolt",
