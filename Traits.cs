@@ -73,21 +73,20 @@ namespace Ainz
             if (_trait == trait0)
             {
                 // trait0:
+                // At the start of combat, apply 2 Scourge to a random monster.
                 LogDebug($"Handling Trait {traitId}: {traitName}");
-                _character.SetAuraTrait(_character, "evade", 1);
+                Character randomEnemy = GetRandomCharacter(teamNpc);
+                randomEnemy?.SetAuraTrait(_character, "scourge", 2);
+                DisplayTraitScroll(_character, traitData, "shadowimpact1", randomEnemy);
             }
 
 
             else if (_trait == trait2a)
             {
                 // trait2a
-                if (CanIncrementTraitActivations(traitId) && _castedCard.HasCardType(Enums.CardType.Defense))// && MatchManager.Instance.energyJustWastedByHero > 0)
-                {
-                    LogDebug($"Handling Trait {traitId}: {traitName}");
-                    // _character?.ModifyEnergy(1);
-                    // DrawCards(1);
-                    IncrementTraitActivations(traitId);
-                }
+                // Scourge on enemies can stack
+                // handled in GACM
+
             }
 
 
@@ -95,7 +94,12 @@ namespace Ainz
             else if (_trait == trait2b)
             {
                 // trait2b:
+                // When you play a card that costs 6 or more Energy, refund 2.
                 LogDebug($"Handling Trait {traitId}: {traitName}");
+                if (_castedCard != null && MatchManager.Instance.energyJustWastedByHero >= 6)
+                {
+                    GainEnergy(_character, 2, traitData);
+                }
 
             }
 
@@ -109,6 +113,8 @@ namespace Ainz
             else if (_trait == trait4b)
             {
                 // trait 4b:
+                // Decay on enemies can stack, cannot be dispelled unless specified, and increases All Damage taken by 2 per stack.
+                // Handled in GACM
                 LogDebug($"Handling Trait {traitId}: {traitName}");
             }
 
@@ -148,23 +154,28 @@ namespace Ainz
             switch (_acId)
             {
                 // trait2a:
-
+                // Scourge on enemies can stack
                 // trait2b:
 
                 // trait 4a;
 
                 // trait 4b:
-
-                case "evasion":
+                // Decay on enemies can stack, cannot be dispelled unless specified, and increases All Damage taken by 2 per stack.
+                case "scourge":
                     traitOfInterest = trait2a;
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.ThisHero))
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.Monsters))
                     {
+                        __result.GainCharges = true;
                     }
                     break;
-                case "stealth":
-                    traitOfInterest = trait2b;
-                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.Heroes))
+                case "decay":
+                    traitOfInterest = trait4b;
+                    if (IfCharacterHas(characterOfInterest, CharacterHas.Trait, traitOfInterest, AppliesTo.Monsters))
                     {
+                        __result.GainCharges = true;
+                        __result.Removable = true;
+                        __result.IncreasedDamageReceivedType = Enums.DamageType.All;
+                        __result.IncreasedDirectDamageReceivedPerStack = 2;
                     }
                     break;
             }

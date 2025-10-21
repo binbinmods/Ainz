@@ -9,6 +9,9 @@ using static UnityEngine.Mathf;
 using UnityEngine.TextCore.LowLevel;
 using static Ainz.Plugin;
 using System.Collections.ObjectModel;
+using BepInEx;
+using UnityEngine;
+using Object = System.Object;
 
 namespace Ainz
 {
@@ -52,7 +55,7 @@ namespace Ainz
             _target.ModifyHp(_hp);
             CastResolutionForCombatText _cast = new CastResolutionForCombatText();
             _cast.heal = _hp;
-            if ((Object)_target.HeroItem != (Object)null)
+            if (_target.HeroItem != null)
             {
                 _target.HeroItem.ScrollCombatTextDamageNew(_cast);
                 EffectsManager.Instance.PlayEffectAC("healimpactsmall", true, _target.HeroItem.CharImageT, false);
@@ -89,7 +92,7 @@ namespace Ainz
             _target.ModifyHp(_hp);
             CastResolutionForCombatText _cast = new CastResolutionForCombatText();
             _cast.heal = _hp;
-            if ((Object)_target.HeroItem != (Object)null)
+            if (_target.HeroItem != null)
             {
                 _target.HeroItem.ScrollCombatTextDamageNew(_cast);
                 EffectsManager.Instance.PlayEffectAC("healimpactsmall", true, _target.HeroItem.CharImageT, false);
@@ -201,7 +204,7 @@ namespace Ainz
         /// <param name="traitName">name of the trait used in the combat log (i.e. "Defense Mastery")</param>
         public static void ReduceCardTypeCostUntilDiscarded(Enums.CardType cardType, int amountToReduce, ref Character _character, ref List<string> heroHand, ref List<CardData> cardDataList, string traitName)
         {
-            if (!((Object)_character.HeroData != (Object)null))
+            if (!(_character.HeroData != null))
                 return;
             int num = amountToReduce;
             if (num <= 0)
@@ -211,13 +214,13 @@ namespace Ainz
             for (int index = 0; index < heroHand.Count; ++index)
             {
                 CardData cardData = MatchManager.Instance.GetCardData(heroHand[index]);
-                if ((Object)cardData != (Object)null && cardData.GetCardFinalCost() > 0 && cardData.HasCardType(cardType))
+                if (cardData != null && cardData.GetCardFinalCost() > 0 && cardData.HasCardType(cardType))
                     cardDataList.Add(cardData);
             }
             for (int index = 0; index < cardDataList.Count; ++index)
             {
                 CardData cardData = cardDataList[index];
-                if ((Object)cardData != (Object)null)
+                if (cardData != null)
                 {
                     cardData.EnergyReductionTemporal += num;
                     MatchManager.Instance.UpdateHandCards();
@@ -286,7 +289,7 @@ namespace Ainz
         /// <param name="traitId">Trait this is attributable to</param>
         public static void Duality(ref Character _character, ref CardData _castedCard, Enums.CardClass class1, Enums.CardClass class2, string traitId, int bonusActivations = 0)
         {
-            if (!((Object)MatchManager.Instance != (Object)null) || !((Object)_castedCard != (Object)null))
+            if (!(MatchManager.Instance != null) || !(_castedCard != null))
                 return;
             TraitData traitData = Globals.Instance.GetTraitData(traitId);
             if (MatchManager.Instance.activatedTraits != null && MatchManager.Instance.activatedTraits.ContainsKey(traitId) && MatchManager.Instance.activatedTraits[traitId] > (traitData.TimesPerTurn - 1 + bonusActivations))
@@ -307,7 +310,7 @@ namespace Ainz
                 }
                 if (_castedCard.CardClass == cardClass1)
                 {
-                    if (MatchManager.Instance.CountHeroHand() == 0 || !((Object)_character.HeroData != (Object)null))
+                    if (MatchManager.Instance.CountHeroHand() == 0 || !(_character.HeroData != null))
                         break;
                     List<CardData> cardDataList = new List<CardData>();
                     List<string> heroHand = MatchManager.Instance.GetHeroHand(_character.HeroIndex);
@@ -315,7 +318,7 @@ namespace Ainz
                     for (int index2 = 0; index2 < heroHand.Count; ++index2)
                     {
                         CardData cardData = MatchManager.Instance.GetCardData(heroHand[index2]);
-                        if ((Object)cardData != (Object)null && cardData.CardClass == cardClass2 && _character.GetCardFinalCost(cardData) > num1)
+                        if (cardData != null && cardData.CardClass == cardClass2 && _character.GetCardFinalCost(cardData) > num1)
                             num1 = _character.GetCardFinalCost(cardData);
                     }
                     if (num1 <= 0)
@@ -323,13 +326,13 @@ namespace Ainz
                     for (int index3 = 0; index3 < heroHand.Count; ++index3)
                     {
                         CardData cardData = MatchManager.Instance.GetCardData(heroHand[index3]);
-                        if ((Object)cardData != (Object)null && cardData.CardClass == cardClass2 && _character.GetCardFinalCost(cardData) >= num1)
+                        if (cardData != null && cardData.CardClass == cardClass2 && _character.GetCardFinalCost(cardData) >= num1)
                             cardDataList.Add(cardData);
                     }
                     if (cardDataList.Count <= 0)
                         break;
                     CardData cardData1 = cardDataList.Count != 1 ? cardDataList[MatchManager.Instance.GetRandomIntRange(0, cardDataList.Count, "trait")] : cardDataList[0];
-                    if (!((Object)cardData1 != (Object)null))
+                    if (!(cardData1 != null))
                         break;
                     if (!MatchManager.Instance.activatedTraits.ContainsKey(traitId))
                         MatchManager.Instance.activatedTraits.Add(traitId, 1);
@@ -359,7 +362,7 @@ namespace Ainz
         /// <param name="_trait"> Trait this is attributed to</param>
         public static void PermanentyReduceXWhenYouPlayY(ref Character _character, ref CardData _castedCard, Enums.CardType reduceThis, Enums.CardType whenYouPlayThis, int amountToReduce, string _trait)
         {
-            if (!((Object)MatchManager.Instance != (Object)null) || !((Object)_castedCard != (Object)null))
+            if (!(MatchManager.Instance != null) || !(_castedCard != null))
                 return;
             TraitData traitData = Globals.Instance.GetTraitData(_trait);
             if (MatchManager.Instance.activatedTraits != null && MatchManager.Instance.activatedTraits.ContainsKey(_trait) && MatchManager.Instance.activatedTraits[_trait] > traitData.TimesPerTurn - 1)
@@ -368,7 +371,7 @@ namespace Ainz
             if (!_castedCard.GetCardTypes().Contains(whenYouPlayThis))
                 return;
 
-            if (MatchManager.Instance.CountHeroHand() == 0 || !((Object)_character.HeroData != (Object)null))
+            if (MatchManager.Instance.CountHeroHand() == 0 || !(_character.HeroData != null))
                 return;
 
 
@@ -380,7 +383,7 @@ namespace Ainz
                 for (int handIndex = 0; handIndex < heroHand.Count; ++handIndex)
                 {
                     CardData cardData = MatchManager.Instance.GetCardData(heroHand[handIndex]);
-                    if ((Object)cardData != (Object)null)
+                    if (cardData != null)
                         cardDataList.Add(cardData);
                 }
             }
@@ -389,7 +392,7 @@ namespace Ainz
                 for (int handIndex = 0; handIndex < heroHand.Count; ++handIndex)
                 {
                     CardData cardData = MatchManager.Instance.GetCardData(heroHand[handIndex]);
-                    if ((Object)cardData != (Object)null && cardData.GetCardTypes().Contains(reduceThis))
+                    if (cardData != null && cardData.GetCardTypes().Contains(reduceThis))
                         cardDataList.Add(cardData);
                 }
             }
@@ -912,9 +915,17 @@ namespace Ainz
         /// </summary>
         /// <param name="_character"> Character the trait comes from</param>
         /// <param name="traitData"> Trait to display the name of</param>
-        public static void DisplayTraitScroll(ref Character _character, TraitData traitData)
+        public static void DisplayTraitScroll(Character _character, TraitData traitData, string effectName = "", Character effectTarget = null)
         {
-            _character.HeroItem?.ScrollCombatText(Texts.Instance.GetText("traits_" + traitData.TraitName, ""), Enums.CombatScrollEffectType.Trait);
+            _character.HeroItem?.ScrollCombatText(traitData.TraitName, Enums.CombatScrollEffectType.Trait);
+            if (effectName.IsNullOrWhiteSpace())
+            {
+                return;
+            }
+            Transform sourceImage = effectTarget?.HeroItem?.CharImageT ?? effectTarget?.NPCItem?.CharImageT;
+            if (sourceImage == null)
+                return;
+            EffectsManager.Instance.PlayEffectAC(effectName, true, sourceImage, flip: false, delay: 0f);
         }
 
         /// <summary>
@@ -1229,7 +1240,7 @@ namespace Ainz
 
             _character.ModifyEnergy(energyToGain, true);
 
-            if (((Object)_character.HeroItem == (Object)null))
+            if ((_character.HeroItem == null))
                 return;
 
             LogDebug("GainEnergy - Setting Effect AC");
@@ -1241,7 +1252,7 @@ namespace Ainz
 
             // LogDebug("GainEnergy - Setting Combat Text");
 
-            // _character.HeroItem.ScrollCombatText(Texts.Instance.GetText($"traits_{traitData.TraitName}"), Enums.CombatScrollEffectType.Trait);
+            _character.HeroItem.ScrollCombatText(traitData.TraitName, Enums.CombatScrollEffectType.Trait);
 
             // LogDebug("GainEnergy - DONE");
 
@@ -1424,7 +1435,7 @@ namespace Ainz
             for (int index = 0; index < heroHand.Count; ++index)
             {
                 CardData cardData = MatchManager.Instance.GetCardData(heroHand[index]);
-                if ((Object)cardData != (Object)null && (cardData.GetCardTypes().Contains(cardType) || cardType == Enums.CardType.None) && cardData.GetCardFinalCost() > num1)
+                if (cardData != null && (cardData.GetCardTypes().Contains(cardType) || cardType == Enums.CardType.None) && cardData.GetCardFinalCost() > num1)
                     num1 = cardData.GetCardFinalCost();
             }
             if (num1 <= 0)
@@ -1432,7 +1443,7 @@ namespace Ainz
             for (int index = 0; index < heroHand.Count; ++index)
             {
                 CardData cardData = MatchManager.Instance.GetCardData(heroHand[index]);
-                if ((Object)cardData != (Object)null && (cardData.GetCardTypes().Contains(cardType) || cardType == Enums.CardType.None) && cardData.GetCardFinalCost() >= num1)
+                if (cardData != null && (cardData.GetCardTypes().Contains(cardType) || cardType == Enums.CardType.None) && cardData.GetCardFinalCost() >= num1)
                     cardDataList.Add(cardData);
             }
             if (cardDataList.Count <= 0)
@@ -1615,7 +1626,7 @@ namespace Ainz
         /// <param name="traitId">Trait this is attributable to</param>
         public static void DualityCardType(ref Character _character, ref CardData _castedCard, Enums.CardType[] cardTypes1, Enums.CardType[] cardTypes2, string traitId, int bonusActivations = 0)
         {
-            if (!((Object)MatchManager.Instance != (Object)null) || !((Object)_castedCard != (Object)null))
+            if (!(MatchManager.Instance != null) || !(_castedCard != null))
                 return;
             TraitData traitData = Globals.Instance.GetTraitData(traitId);
             if (MatchManager.Instance.activatedTraits != null && MatchManager.Instance.activatedTraits.ContainsKey(traitId) && MatchManager.Instance.activatedTraits[traitId] > (traitData.TimesPerTurn - 1 + bonusActivations))
@@ -1640,7 +1651,7 @@ namespace Ainz
                 // bool hasCardType2 = types2.Any(castedCard.HasCardType);
                 if (hasProperCardTypeToTrigger)
                 {
-                    if (MatchManager.Instance.CountHeroHand() == 0 || !((Object)_character.HeroData != (Object)null))
+                    if (MatchManager.Instance.CountHeroHand() == 0 || !(_character.HeroData != null))
                         break;
                     List<CardData> cardDataList = new List<CardData>();
                     List<string> heroHand = MatchManager.Instance.GetHeroHand(_character.HeroIndex);
@@ -1649,7 +1660,7 @@ namespace Ainz
                     {
                         CardData cardData = MatchManager.Instance.GetCardData(heroHand[index2]);
                         bool hasProperCardTypeToReduce = types2.Any(cardData.HasCardType);
-                        if ((Object)cardData != (Object)null && hasProperCardTypeToReduce && _character.GetCardFinalCost(cardData) > num1)
+                        if (cardData != null && hasProperCardTypeToReduce && _character.GetCardFinalCost(cardData) > num1)
                             num1 = _character.GetCardFinalCost(cardData);
                     }
                     if (num1 <= 0)
@@ -1659,13 +1670,13 @@ namespace Ainz
                         CardData cardData = MatchManager.Instance.GetCardData(heroHand[index3]);
                         bool hasProperCardTypeToReduce = types2.Any(cardData.HasCardType);
 
-                        if ((Object)cardData != (Object)null && hasProperCardTypeToReduce && _character.GetCardFinalCost(cardData) >= num1)
+                        if (cardData != null && hasProperCardTypeToReduce && _character.GetCardFinalCost(cardData) >= num1)
                             cardDataList.Add(cardData);
                     }
                     if (cardDataList.Count <= 0)
                         break;
                     CardData cardData1 = cardDataList.Count != 1 ? cardDataList[MatchManager.Instance.GetRandomIntRange(0, cardDataList.Count, "trait")] : cardDataList[0];
-                    if (!((Object)cardData1 != (Object)null))
+                    if (!(cardData1 != null))
                         break;
                     if (!MatchManager.Instance.activatedTraits.ContainsKey(traitId))
                         MatchManager.Instance.activatedTraits.Add(traitId, 1);

@@ -1,0 +1,6 @@
+{
+	"ID": "tier10magic",
+	"Name": "Tenth Tier Magic",
+	"Traits": ["overlordtrait4a"],
+	"Cards": ["overlordmeteorshower", "overlordeffulgentberyl", "overlordfallendown", "overlordmoonfall", "overlordstoptime", "overlordthirstforknowledge", "overlordtombofnazarick", "overlordvaultofknowledge", "overlordwishuponastar"]	
+}
