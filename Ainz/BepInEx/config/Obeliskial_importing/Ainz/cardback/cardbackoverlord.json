@@ -1,0 +1,15 @@
+{
+    "AdventureLevel": 0,
+    "BaseCardback": true,
+    "CardbackID": "cardbackoverlord",
+    "CardbackName": "Default",
+    "CardbackOrder": 1000,
+    "CardbackSprite": "cardbackoverlord",
+    "CardbackSubclass": "overlord",
+    "Locked": false,
+    "ObeliskLevel": 0,
+    "RankLevel": 0,
+    "ShowIfLocked": false,
+    "Sku": "",
+    "SteamStat": ""
+}

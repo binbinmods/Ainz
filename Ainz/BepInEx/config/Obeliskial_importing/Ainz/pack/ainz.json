@@ -1,0 +1,15 @@
+{
+    "Card0": "overlordgraspheart",
+    "Card1": "curseofshadows",
+    "Card2": "necroticburst",
+    "Card3": "curseofdecay",
+    "Card4": "drainlife",
+    "Card5": "",
+    "CardSpecial0": "",
+    "CardSpecial1": "",
+    "PackClass": "mage",
+    "PackID": "ainz",
+    "PackName": "Ainz",
+    "PerkList": [],
+    "RequiredClass": "overlord"
+}
